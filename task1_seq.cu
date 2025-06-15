@@ -24,7 +24,6 @@ int main() {
     cudaMalloc((void**)&d_array, size * sizeof(int));
     cudaMalloc((void**)&d_result, sizeof(long long));
 
-    // Инициализация массива на хосте
     int *h_array = (int*)malloc(size * sizeof(int));
     for (int i = 0; i < size; i++) {
         h_array[i] = i + 1;
@@ -35,7 +34,6 @@ int main() {
 
     clock_t start = clock();
 
-    // Запуск ядра (1 блок, 1 нить)
     sequential_sum_kernel<<<1, 1>>>(d_array, d_result, size);
 
     cudaDeviceSynchronize();
