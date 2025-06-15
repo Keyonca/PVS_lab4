@@ -21,7 +21,6 @@ int main() {
     long long *d_result;
     long long h_result = 0;
 
-    // Выделение памяти на устройстве
     cudaMalloc((void**)&d_array, size * sizeof(int));
     cudaMalloc((void**)&d_result, sizeof(long long));
 
@@ -31,7 +30,6 @@ int main() {
         h_array[i] = i + 1;
     }
 
-    // Копирование данных на устройство
     cudaMemcpy(d_array, h_array, size * sizeof(int), cudaMemcpyHostToDevice);
     cudaMemcpy(d_result, &h_result, sizeof(long long), cudaMemcpyHostToDevice);
 
@@ -47,7 +45,6 @@ int main() {
         return 1;
     }
 
-    // Копирование результата обратно
     cudaMemcpy(&h_result, d_result, sizeof(long long), cudaMemcpyDeviceToHost);
 
     clock_t end = clock();
@@ -56,7 +53,6 @@ int main() {
     printf("Сумма массива: %lld\n", h_result);
     printf("Время выполнения (CUDA sequential): %f секунд\n", time_taken);
 
-    // Освобождение памяти
     cudaFree(d_array);
     cudaFree(d_result);
     free(h_array);
